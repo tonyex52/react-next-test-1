@@ -3,22 +3,35 @@
   "version": "1.0.0",
   "license": "ISC",
   "scripts": {
-    "dev": "next",
+    "dev": "node ./server",
     "build": "next build",
-    "start": "next start"
+    "start": "cross-env NODE_ENV=production node ./server"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "connect-redis": "^4.0.4",
+    "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.2",
     "es6-promise": "4.1.1",
-    "next": "latest",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "next": "9.4.1",
     "next-redux-saga": "4.0.0",
     "next-redux-wrapper": "2.0.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "5.0.7",
+    "redis": "^3.0.2",
     "redux": "4.0.1",
-    "redux-saga": "1.0.1"
+    "redux-saga": "1.0.1",
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-styled-components": "^1.10.7",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "flow-bin": "^0.129.0",
     "redux-devtools-extension": "2.13.2"
