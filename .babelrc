@@ -1,0 +1,15 @@
+{
+  "presets": [
+      "next/babel"
+  ],
+  "plugins": [
+      "transform-flow-strip-types"
+  ],
+  "env": {
+    "development": {
+      "plugins": [["babel-plugin-styled-components", {
+        "displayName": true
+      }]]
+    }
+  }
+}
