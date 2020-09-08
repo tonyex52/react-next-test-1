@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const redis = require('redis')
-const passport = require('passport');
+const passport = require('passport')
 
 const config = require('./config')
 const strategy = require('./passport/strategy')
@@ -15,7 +15,7 @@ const strategyUtils = require('./passport/utilities')
 const responseStatus = require('../constants/responseStatus')
 const responseFormatter = require('../utils/responseFormatter')
 
-passport.use(strategy);
+passport.use(strategy)
 passport.serializeUser(strategyUtils.serializer)
 passport.deserializeUser(strategyUtils.deserializer)
 
@@ -23,7 +23,7 @@ const redisConfig = {
   host: config.redisHost,
   port: config.redisPort,
 }
-if(config.redisPassword) {
+if (config.redisPassword) {
   Object.assign(redisConfig, { password: config.redisPassword })
 }
 const redisClient = redis.createClient(redisConfig)
@@ -43,7 +43,7 @@ const sessionOptions = {
   },
   resave: false,
   saveUninitialized: false,
-};
+}
 
 express.use(require('body-parser').urlencoded({ extended: true }))
 express.use(session(sessionOptions))
@@ -51,28 +51,32 @@ express.use(session(sessionOptions))
 express.use(passport.initialize())
 express.use(passport.session())
 
-express.post('/login-action',
-  (req, res, done) => {
-    passport.authenticate('local', (error, user, info) => {
-      if (error) { return res.send(error) }
-      if (!user) { return res.redirect('/login') }
-      req.logIn(user, function(err) {
-        if (err) { return res.send(err) }
-        return res.redirect('/')
-      })
-    })(req, res, done)
-  }
-)
+express.post('/login-action', (req, res, done) => {
+  passport.authenticate('local', (error, user, info) => {
+    if (error) {
+      return res.send(error)
+    }
+    if (!user) {
+      return res.redirect('/login')
+    }
+    return req.logIn(user, (err) => {
+      if (err) {
+        return res.send(err, info)
+      }
+      return res.redirect('/')
+    })
+  })(req, res, done)
+})
 
 express.get('/login', (req, res, done) => {
-  if(req.user) {
+  if (req.user) {
     res.redirect('/')
   }
   done()
 })
 
 express.get('/', (req, res, done) => {
-  if(!req.user) {
+  if (!req.user) {
     res.redirect('/login')
   }
   done()
@@ -94,18 +98,18 @@ app
   .prepare()
   .then(() => {
     if (dev) {
-      express.get('/_next/*', (req, res) => {
-        return handle(req, res).then(() => {
+      express.get('/_next/*', (req, res) =>
+        handle(req, res).then(() => {
           res.sent = true
         })
-      })
+      )
     }
 
-    express.all('/api/*', (req, res) => {
-      return handle(req, res).then(() => {
+    express.all('/api/*', (req, res) =>
+      handle(req, res).then(() => {
         res.sent = true
       })
-    })
+    )
 
     express.all('/*', (req, res) => {
       return handle(req, res).then(() => {

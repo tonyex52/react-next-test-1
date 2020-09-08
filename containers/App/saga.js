@@ -1,5 +1,4 @@
-import { all, take, call, put, select, cancel, takeLatest } from 'redux-saga/effects'
-import axios from 'axios'
+import { all, call, put, takeLatest } from 'redux-saga/effects'
 import fetchApi from 'utils/fetchApi'
 import { actionTypes, setUserName } from './actions'
 
