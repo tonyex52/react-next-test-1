@@ -1,8 +1,11 @@
 import { applyMiddleware, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import { createWrapper } from 'next-redux-wrapper'
 
 import rootReducer from './reducer'
 import rootSaga from './saga'
+
+/* eslint-disable */
 
 const bindMiddleware = (middleware) => {
   if (process.env.NODE_ENV !== 'production') {
@@ -12,17 +15,15 @@ const bindMiddleware = (middleware) => {
   return applyMiddleware(...middleware)
 }
 
-function configureStore(initialState = {}) {
+export const makeStore = (context) => {
   const sagaMiddleware = createSagaMiddleware()
-  const store = createStore(
-    rootReducer,
-    initialState,
-    bindMiddleware([sagaMiddleware])
-  )
+  const store = createStore(rootReducer, bindMiddleware([sagaMiddleware]))
 
   store.sagaTask = sagaMiddleware.run(rootSaga)
 
   return store
 }
 
-export default configureStore
+export const wrapper = createWrapper(makeStore, { debug: false })
+
+/* eslint-enable */
