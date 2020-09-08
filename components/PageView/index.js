@@ -3,6 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import Header, { MenuContainer } from 'components/Header'
 import Navigation, { Item as NavItem } from 'components/Navigation'
+import { type NavItemType } from 'components/Navigation/constants'
 
 const Container = styled.div`
   width: 100%;
@@ -110,11 +111,13 @@ const PageView = ({
   className,
   title,
   userName,
+  navList,
   onClickLogout,
 }: {
   className: ?string,
   title: ?string,
   userName: string,
+  navList: $ReadOnlyArray<NavItemType>,
   onClickLogout: Function,
 }) => {
   const [isOpenNav, setIsOpenNav] = useState(false)
@@ -138,13 +141,7 @@ const PageView = ({
         onClickMenu={onClickMenu}
         onClickLogout={onClickLogout}
       />
-      <StyledNav
-        isOpen={isOpenNav}
-        list={[
-          { name: 'I am Test', url: '/tests' },
-          { name: 'Test 2', url: '/test 2' },
-        ]}
-      />
+      <StyledNav isOpen={isOpenNav} list={navList} />
     </Container>
   )
 }
