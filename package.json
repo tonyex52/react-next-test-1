@@ -16,7 +16,7 @@
     "es6-promise": "4.1.1",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "next": "9.4.1",
+    "next": "11.1.0",
     "next-redux-saga": "4.0.0",
     "next-redux-wrapper": "^6.0.2",
     "passport": "^0.4.1",
